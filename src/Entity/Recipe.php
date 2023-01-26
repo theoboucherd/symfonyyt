@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use DateTimeImmutable;
+use App\Entity\Ingredient;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+#[UniqueEntity('name')]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
 class Recipe
 {
@@ -44,7 +48,7 @@ class Recipe
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\ManyToMany(targetEntity: ingredient::class)]
+    #[ORM\ManyToMany(targetEntity: Ingredient::class)]
     private Collection $ingredients;
 
     
@@ -58,6 +62,8 @@ class Recipe
         $this->updatedAt = new \DateTimeImmutable();
 
     }
+
+    #[ORM\PrePersist()]
 
     public function getId(): ?int
     {
