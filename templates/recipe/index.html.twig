@@ -5,6 +5,10 @@
 {% block body %}
     <h1>Mes recettes</h1>
 
+    <a href="{{ path('recipe.new.html/twig') }}" class="btn btn-primary">
+    Créer un ingrédient
+    </a>
+
 {% if not recipes.items is same as([]) %}
     <div class="count mt-4">
         Il y a {{recipes.getTotalItemCount }} recettes
